@@ -1,15 +1,24 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include <stack>
+#include <list>
+#include <string>
 
 class Lexer;
 class Symbol;
+class Token;
+
 class Parser {
 public:
     Lexer *lexer;
-    std::stack<Symbol> symbols;
+    std::list<Symbol> symbols;
 
+    Parser();
+    void step(Symbol);
+    void transduce(std::string &text);
+
+    int hash(int);  //Hashes a number encoding the grammeme to a column index for the predictive matrix
+    bool compare(Symbol, Token);
 };
 
 #endif

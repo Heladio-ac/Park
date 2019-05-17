@@ -30,14 +30,16 @@ SOURCES += \
         token.cpp \
         error.cpp \
         lexer.cpp \
-        parser.cpp
+        parser.cpp \
+        symbol.cpp
 
 HEADERS += \
         mainwindow.h \
         token.h \
         error.h \
         lexer.h \
-        parser.h
+        parser.h \
+        symbol.h
 
 FORMS += \
         mainwindow.ui

@@ -64,6 +64,14 @@
     #define ELSE 30
 #endif
 
+// Functions
+#ifndef LEXER_FUNC
+    #define LEXER_FUNC
+    
+    #define IS_VALID !(state >= 500)
+    #define IS_DELIMITER !(state >= 100)
+#endif
+
 static int transition[34][31] = {
     {2,   1,   1,   2,   7,   599, 16,  4,   17,  18,  19,  32,  13,  15,  0,   20,  22,  24,  25,  27,  31,  33,  125, 127, 128, 129, 130, 131, 132, 133, 599},
     {2,   1,   1,   2,   2,   3,   101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101, 101},
@@ -142,8 +150,8 @@ void Lexer::step(char symbol) {
 
 Token Lexer::generateToken(int &index, std::string &text) {
     restart();
-    while (!isDelimiter()) {
-        if (state != 0) {
+    while (!IS_DELIMITER) {
+        if (state) {
             lexeme += text[index];
         }
         step(text[index]);
@@ -154,7 +162,7 @@ Token Lexer::generateToken(int &index, std::string &text) {
     } else {
         index--;
     }
-    if (isValid()) {
+    if (IS_VALID) {
         state = isReserved() ? RESERVED : IDENTIFIER;
         return Token(lexeme, state);
     } else {
@@ -233,14 +241,6 @@ void Lexer::restart() {
     lexeme = "";
 }
 
-bool Lexer::isValid() {
-    return !(state >= 500);
-}
-
-bool Lexer::isDelimiter() {
-    return state >= 100;
-}
-
 bool Lexer::isFinal() {
     switch (state) {
         case COMMENTARY: case CHARACTER: case STRING:
@@ -263,8 +263,3 @@ bool Lexer::isReserved() {
     }
     return false;
 }
-
-int Lexer::getstate() {
-    return state;
-}
-

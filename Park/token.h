@@ -8,7 +8,6 @@ public:
     std::string lexeme;
     int grammeme;
 
-public:
     Token(std::string l, int g);
     std::string getGrammeme();
 };
