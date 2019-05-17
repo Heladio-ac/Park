@@ -26,10 +26,18 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        token.cpp \
+        error.cpp \
+        lexer.cpp \
+        parser.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+        token.h \
+        error.h \
+        lexer.h \
+        parser.h
 
 FORMS += \
         mainwindow.ui

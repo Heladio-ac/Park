@@ -2,14 +2,12 @@
 #define ERROR_H
 
 #include <string>
+#include "token.h"
 
-class Error {
-public:
-    std::string lexeme;
-    int error;
+class Error: public Token {
 
 public:
-    Error(std::string l, int e);
+    using Token::Token;
     std::string getError();
 };
 

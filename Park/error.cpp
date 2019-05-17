@@ -12,13 +12,9 @@
     #define ERRORUNKNOWN 599
 #endif
 
-Error::Error(std::string l, int e) {
-    lexeme = l;
-    error = e;
-}
 
 std::string Error::getError() {
-    switch (error) {
+    switch (grammeme) {
         case ERRORIDENTIFIER:
             return "Identifiers can not end with a _";
         case ERRORFLOAT:

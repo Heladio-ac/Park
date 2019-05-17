@@ -140,37 +140,26 @@ void Lexer::step(char symbol) {
     state = transition[state][hash(symbol)];
 }
 
-void Lexer::transduce(std::string text) {
-    tokens.clear();
-    errors.clear();
-    for(int i = 0; i < text.length(); i++) {
-        step(text[i]);
-        if (isDelimiter()) {
-            if (isFinal()) {
-                lexeme += text[i];
-            } else {
-                i--;
-            }
-            if (isValid()) {
-                if (state == RESERVED) {
-                    state = IDENTIFIER;
-                    for (std::string reserved: reservedWords) {
-                        if (reserved == lexeme) {
-                            state = RESERVED;
-                            break;
-                        }
-                    }
-                }
-                tokens.push_back(Token(lexeme, state));
-            } else {
-                errors.push_back(Error(lexeme, state));
-            }
-            restart();
-        } else if (state != 0){
-            lexeme += text[i];
-        }
-    }
+Token Lexer::generateToken(int &index, std::string &text) {
     restart();
+    while (!isDelimiter()) {
+        if (state != 0) {
+            lexeme += text[index];
+        }
+        step(text[index]);
+        index++;
+    }
+    if (isFinal()) {
+        lexeme += text[index];
+    } else {
+        index--;
+    }
+    if (isValid()) {
+        state = isReserved() ? RESERVED : IDENTIFIER;
+        return Token(lexeme, state);
+    } else {
+        return Error(lexeme, state);
+    }
 }
 
 int Lexer::hash(char symbol) {
@@ -264,6 +253,15 @@ bool Lexer::isFinal() {
         default:
             return false;
     }
+}
+
+bool Lexer::isReserved() {
+    for (std::string reserved: reservedWords) {
+        if (reserved == lexeme) {
+            return true;
+        }
+    }
+    return false;
 }
 
 int Lexer::getstate() {
