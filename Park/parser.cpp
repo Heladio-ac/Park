@@ -10,8 +10,18 @@
     #define END_FILE
 #endif
 
-Parser::Parser() {
+#ifndef PARSER_FUNC
+#define PARSER_FUNC
+    #define IS_ERROR(A) A.grammeme >= 500
+    #define COMPARE(A, B) A.grammeme == B.grammeme
+#endif
 
+static int prediction[1][1] = {
+    {0}
+};
+
+Parser::Parser() {
+    lexer = new Lexer();
 }
 
 void Parser::step(Symbol symbol) {
@@ -23,14 +33,16 @@ void Parser::step(Symbol symbol) {
 void Parser::transduce(std::string &text) {
     symbols.push_back(Symbol(END_FILE));
     symbols.push_back(Symbol(EXPRESSION));
+    // Look through the entire text
     for (int i = 0; i < text.length(); i++) {
-        if (compare(symbols.back(), lexer->generateToken(i, text))) {
+        token = lexer->generateToken(i, text);
+        if (IS_ERROR(token))
+        if (COMPARE(symbols.back(), token)) {
+            symbols.pop_back();
+        } else if () {
 
+        } else {
+            //error
         }
-        symbols.pop_back();
     }
-}
-
-bool Parser::compare(Symbol symbol, Token token) {
-    // Determine wheter the symbol is a final element which coincides with the token's grammeme
 }

@@ -1,7 +1,6 @@
 #include "lexer.h"
 
 #include "token.h"
-#include "error.h"
 
 #include <ctype.h>
 #include <algorithm>

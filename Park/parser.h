@@ -12,6 +12,7 @@ class Parser {
 public:
     Lexer *lexer;
     std::list<Symbol> symbols;
+    Token token;
 
     Parser();
     void step(Symbol);

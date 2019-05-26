@@ -39,6 +39,19 @@
     #define SQUAREBCLOSE 133
 #endif
 
+#ifndef ERROR_STATES
+    #define ERROR_STATES
+
+    #define ERRORIDENTIFIER 501
+    #define ERRORFLOAT 502
+    #define ERRORFLOATSCI 503
+    #define ERRORCHAR 504
+    #define ERROROR 505
+    #define ERRORAND 506
+    #define ERRORUNKNOWN 599
+#endif
+
+
 Token::Token(std::string l, int g) {
     lexeme = l;
     grammeme = g;
@@ -46,6 +59,7 @@ Token::Token(std::string l, int g) {
 
 std::string Token::getGrammeme() {
     switch (grammeme) {
+        // Accepted
         case RESERVED:
             return "Reserved word";
         case IDENTIFIER:
@@ -112,7 +126,20 @@ std::string Token::getGrammeme() {
             return "Open Square Brackets";
         case SQUAREBCLOSE:
             return "Close Square Brackets";
-        default:
-            return "ERROR";
+        // Errors
+        case ERRORIDENTIFIER:
+            return "Identifiers can not end with a _";
+        case ERRORFLOAT:
+            return "Malformed floating point constant, expected a digit after the point";
+        case ERRORFLOATSCI:
+            return "Malformed floating point constant, expected a digit or +/- sign after the exponent";
+        case ERRORCHAR:
+            return "Malformed character constant, expected a closing apostrophe";
+        case ERROROR:
+            return "Malformed OR operator, expected a second |";
+        case ERRORAND:
+            return "Malformed AND operator, expected a second &";
+        case ERRORUNKNOWN: default:
+            return "Unknown Error";
     }
 }
