@@ -4,9 +4,10 @@
 #include <list>
 #include <string>
 
+#include "token.h"
+
 class Lexer;
 class Symbol;
-class Token;
 
 class Parser {
 public:
@@ -15,11 +16,11 @@ public:
     Token token;
 
     Parser();
-    void step(Symbol);
+    void step();
     void transduce(std::string &text);
-
-    int hash(int);  //Hashes a number encoding the grammeme to a column index for the predictive matrix
-    bool compare(Symbol, Token);
+    // Hashes a number encoding the grammeme to a column index for the predictive matrix
+    int hash(int);
+    bool isValidDerivation();
 };
 
 #endif

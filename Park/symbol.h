@@ -7,6 +7,7 @@ class Symbol {
     public:
         int grammeme;
 
+        Symbol(int);
         static std::list<Symbol> derive(int);
 };
 

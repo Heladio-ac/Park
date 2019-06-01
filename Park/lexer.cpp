@@ -7,8 +7,8 @@
 #include <initializer_list>
 
 // Delimiting states
-#ifndef STATES
-    #define STATES
+#ifndef TERMINAL_SYMBOLS
+    #define TERMINAL_SYMBOLS
     //Accepting states
     #define RESERVED 101
     #define IDENTIFIER 102
@@ -47,8 +47,9 @@
     #define ERRORIDENTIFIER 501
     #define ERRORFLOAT 502
     #define ERRORFLOATSCI 503
-    #define ERROROR 504
-    #define ERRORAND 505
+    #define ERRORCHAR 504
+    #define ERROROR 505
+    #define ERRORAND 506
     #define ERRORUNKNOWN 599
 #endif
 
@@ -163,10 +164,8 @@ Token Lexer::generateToken(int &index, std::string &text) {
     }
     if (IS_VALID) {
         state = isReserved() ? RESERVED : IDENTIFIER;
-        return Token(lexeme, state);
-    } else {
-        return Error(lexeme, state);
     }
+    return Token(lexeme, state);
 }
 
 int Lexer::hash(char symbol) {

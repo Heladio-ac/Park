@@ -1,9 +1,9 @@
 #include "token.h"
 
-// Accepting states
-#ifndef ACCEPTING_STATES
-    #define ACCEPTING_STATES
-
+// Delimiting states
+#ifndef TERMINAL_SYMBOLS
+    #define TERMINAL_SYMBOLS
+    //Accepting states
     #define RESERVED 101
     #define IDENTIFIER 102
     #define COMMENTARY 103
@@ -12,10 +12,10 @@
     #define FLOATSCI 106
     #define CHARACTER 107
     #define STRING 108
-    #define MULTIPLICATION 109
-    #define DIVISION 110
-    #define ADDITION 111
-    #define SUBSTRACTION 112
+    #define TIMES_SIGN 109
+    #define OVER_SIGN 110
+    #define PLUS_SIGN 111
+    #define MINUS_SIGN 112
     #define MODULO 113
     #define OR 114
     #define AND 115
@@ -26,7 +26,7 @@
     #define GREATEREQUALS 120
     #define EQUALS 121
     #define NEQUALS 122
-    #define ASSIGNMENT 123
+    #define EQUAL_SIGN 123
     #define POINT 124
     #define COMMA 125
     #define COLON 126
@@ -37,11 +37,7 @@
     #define BRACKETSCLOSE 131
     #define SQUAREBOPEN 132
     #define SQUAREBCLOSE 133
-#endif
-
-#ifndef ERROR_STATES
-    #define ERROR_STATES
-
+    //Error states
     #define ERRORIDENTIFIER 501
     #define ERRORFLOAT 502
     #define ERRORFLOATSCI 503
@@ -49,10 +45,10 @@
     #define ERROROR 505
     #define ERRORAND 506
     #define ERRORUNKNOWN 599
+
 #endif
 
-
-Token::Token(std::string l, int g) {
+Token::Token(std::string l, int g) : Symbol(g){
     lexeme = l;
     grammeme = g;
 }
@@ -76,13 +72,13 @@ std::string Token::getGrammeme() {
             return "Character";
         case STRING:
             return "String";
-        case MULTIPLICATION:
+        case TIMES_SIGN:
             return "Multiplication";
-        case DIVISION:
+        case OVER_SIGN:
             return "Division";
-        case ADDITION:
+        case PLUS_SIGN:
             return "Addition";
-        case SUBSTRACTION:
+        case MINUS_SIGN:
             return "Substraction";
         case MODULO:
             return "Modulo";
@@ -104,7 +100,7 @@ std::string Token::getGrammeme() {
             return "Equals";
         case NEQUALS:
             return "Is different";
-        case ASSIGNMENT:
+        case EQUAL_SIGN:
             return "Assign";
         case POINT:
             return "Point";
