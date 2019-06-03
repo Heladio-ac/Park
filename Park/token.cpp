@@ -49,7 +49,7 @@
     #define ERRORUNKNOWN 599
 #endif
 
-Token::Token(std::string l, int g) : Symbol(g){
+Token::Token(std::string l, int g) : Symbol(g, true){
     lexeme = l;
     grammeme = g;
 }

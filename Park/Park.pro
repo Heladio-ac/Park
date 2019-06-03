@@ -28,7 +28,6 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         token.cpp \
-        error.cpp \
         lexer.cpp \
         parser.cpp \
         symbol.cpp
@@ -36,7 +35,6 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
         token.h \
-        error.h \
         lexer.h \
         parser.h \
         symbol.h

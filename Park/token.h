@@ -1,11 +1,11 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#include <string>
 #include "symbol.h"
 
-#include <string>
-
-class Token : public Symbol{
+class Symbol;
+class Token : public Symbol {
 public:
     std::string lexeme;
 
@@ -13,5 +13,4 @@ public:
     Token(std::string l, int g);
     std::string getGrammeme();
 };
-
-#endif // TOKEN_H
+#endif
