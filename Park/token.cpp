@@ -2,50 +2,51 @@
 
 // Delimiting states
 #ifndef TERMINAL_SYMBOLS
-    #define TERMINAL_SYMBOLS
+#define TERMINAL_SYMBOLS
     //Accepting states
     #define RESERVED 101
     #define IDENTIFIER 102
-    #define COMMENTARY 103
-    #define INTEGER 104
-    #define FLOAT 105
-    #define FLOATSCI 106
-    #define CHARACTER 107
-    #define STRING 108
-    #define TIMES_SIGN 109
-    #define OVER_SIGN 110
-    #define PLUS_SIGN 111
-    #define MINUS_SIGN 112
-    #define MODULO 113
-    #define OR 114
-    #define AND 115
-    #define NOT 116
-    #define LESSTHAN 117
-    #define LESSEQUALS 118
-    #define GREATERTHAN 119
-    #define GREATEREQUALS 120
-    #define EQUALS 121
-    #define NEQUALS 122
-    #define EQUAL_SIGN 123
-    #define POINT 124
-    #define COMMA 125
-    #define COLON 126
-    #define SEMICOLON 127
-    #define PARENTHESISOPEN 128
-    #define PARENTHESISCLOSE 129
-    #define BRACKETSOPEN 130
-    #define BRACKETSCLOSE 131
-    #define SQUAREBOPEN 132
-    #define SQUAREBCLOSE 133
+    #define LIBRARY 103
+    #define COMMENTARY 104
+    #define INTEGER 105
+    #define FLOAT 106
+    #define FLOATSCI 107
+    #define CHARACTER 108
+    #define STRING 109
+    #define TIMES_SIGN 110
+    #define OVER_SIGN 111
+    #define PLUS_SIGN 112
+    #define MINUS_SIGN 113
+    #define MODULO 114
+    #define OR 115
+    #define AND 116
+    #define NOT 117
+    #define LESSTHAN 118
+    #define LESSEQUALS 119
+    #define GREATERTHAN 120
+    #define GREATEREQUALS 121
+    #define EQUALS 122
+    #define NEQUALS 123
+    #define ASSIGNMENT 124
+    #define POINT 125
+    #define COMMA 126
+    #define COLON 127
+    #define SEMICOLON 128
+    #define PARENTHESISOPEN 129
+    #define PARENTHESISCLOSE 130
+    #define BRACKETSOPEN 131
+    #define BRACKETSCLOSE 132
+    #define SQUAREBOPEN 133
+    #define SQUAREBCLOSE 134
     //Error states
     #define ERRORIDENTIFIER 501
-    #define ERRORFLOAT 502
-    #define ERRORFLOATSCI 503
-    #define ERRORCHAR 504
-    #define ERROROR 505
-    #define ERRORAND 506
+    #define ERRORLIBRARY 502
+    #define ERRORFLOAT 503
+    #define ERRORFLOATSCI 504
+    #define ERRORCHAR 505
+    #define ERROROR 506
+    #define ERRORAND 507
     #define ERRORUNKNOWN 599
-
 #endif
 
 Token::Token(std::string l, int g) : Symbol(g){
@@ -60,6 +61,8 @@ std::string Token::getGrammeme() {
             return "Reserved word";
         case IDENTIFIER:
             return "Identifier";
+        case LIBRARY:
+            return "Library identifier";
         case COMMENTARY:
             return "Commentary";
         case INTEGER:
@@ -125,6 +128,8 @@ std::string Token::getGrammeme() {
         // Errors
         case ERRORIDENTIFIER:
             return "Identifiers can not end with a _";
+        case ERRORLIBRARY:
+            return "Library identifiers must end with 'lye'";
         case ERRORFLOAT:
             return "Malformed floating point constant, expected a digit after the point";
         case ERRORFLOATSCI:
