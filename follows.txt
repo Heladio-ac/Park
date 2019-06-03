@@ -3,7 +3,7 @@ PROGRAM:
 DECL_LIBRARIES:
     class
 DECL_VARIABLES:
-    ID if else while for read write enter end
+    ID if while for read write enter end
 VARIABLES:
     as
 MORE_VARIABLES:

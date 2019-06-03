@@ -11,9 +11,9 @@ MORE_VARIABLES:
 TYPE:
     integer float char string boolean
 STATEMENTS:
-    ID if else while for read write enter ε
+    ID if while for read write enter ε
 STATEMENT:
-    ID if else while for read write enter
+    ID if while for read write enter
 ASSIGNMENT:
     ID
 EXPRESSION_0:

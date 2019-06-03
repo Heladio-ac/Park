@@ -27,7 +27,7 @@
     #define GREATEREQUALS 121
     #define EQUALS 122
     #define NEQUALS 123
-    #define ASSIGNMENT 124
+    #define EQUAL_SIGN 124
     #define POINT 125
     #define COMMA 126
     #define COLON 127
