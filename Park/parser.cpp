@@ -44,46 +44,47 @@
     //Accepting states
     #define RESERVED 101
     #define IDENTIFIER 102
-    #define COMMENTARY 103
-    #define INTEGER 104
-    #define FLOAT 105
-    #define FLOATSCI 106
-    #define CHARACTER 107
-    #define STRING 108
-    #define TIMES_SIGN 109
-    #define OVER_SIGN 110
-    #define PLUS_SIGN 111
-    #define MINUS_SIGN 112
-    #define MODULO 113
-    #define OR 114
-    #define AND 115
-    #define NOT 116
-    #define LESSTHAN 117
-    #define LESSEQUALS 118
-    #define GREATERTHAN 119
-    #define GREATEREQUALS 120
-    #define EQUALS 121
-    #define NEQUALS 122
-    #define EQUAL_SIGN 123
-    #define POINT 124
-    #define COMMA 125
-    #define COLON 126
-    #define SEMICOLON 127
-    #define PARENTHESISOPEN 128
-    #define PARENTHESISCLOSE 129
-    #define BRACKETSOPEN 130
-    #define BRACKETSCLOSE 131
-    #define SQUAREBOPEN 132
-    #define SQUAREBCLOSE 133
+    #define LIBRARY 103
+    #define COMMENTARY 104
+    #define INTEGER 105
+    #define FLOAT 106
+    #define FLOATSCI 107
+    #define CHARACTER 108
+    #define STRING 109
+    #define TIMES_SIGN 110
+    #define OVER_SIGN 111
+    #define PLUS_SIGN 112
+    #define MINUS_SIGN 113
+    #define MODULO 114
+    #define OR 115
+    #define AND 116
+    #define NOT 117
+    #define LESSTHAN 118
+    #define LESSEQUALS 119
+    #define GREATERTHAN 120
+    #define GREATEREQUALS 121
+    #define EQUALS 122
+    #define NEQUALS 123
+    #define EQUAL_SIGN 124
+    #define POINT 125
+    #define COMMA 126
+    #define COLON 127
+    #define SEMICOLON 128
+    #define PARENTHESISOPEN 129
+    #define PARENTHESISCLOSE 130
+    #define BRACKETSOPEN 131
+    #define BRACKETSCLOSE 132
+    #define SQUAREBOPEN 133
+    #define SQUAREBCLOSE 134
     //Error states
     #define ERRORIDENTIFIER 501
-    #define ERRORFLOAT 502
-    #define ERRORFLOATSCI 503
-    #define ERRORCHAR 504
-    #define ERROROR 505
-    #define ERRORAND 506
+    #define ERRORLIBRARY 502
+    #define ERRORFLOAT 503
+    #define ERRORFLOATSCI 504
+    #define ERRORCHAR 505
+    #define ERROROR 506
+    #define ERRORAND 507
     #define ERRORUNKNOWN 599
-
 #endif
 
 #ifndef PARSER_FUNC
@@ -126,78 +127,133 @@ void Parser::transduce(std::string &text) {
 }
 
 int Parser::hash(int grammeme) {
+    std::string lexeme = token.lexeme;
     switch (grammeme) {
         case RESERVED:
-            std::string reserved = token.lexeme;
-            if (reserved == "class") {
+            if (lexeme == "class") {
                 return 0;
-            } else if () {
-
+            } else if (lexeme == "begin") {
+                return 1;
+            } else if (lexeme == "end") {
+                return 2;
+            } else if (lexeme == "def") {
+                return 3;
+            } else if (lexeme == "as") {
+                return 4;
+            } else if (lexeme == "integer") {
+                return 5;
+            } else if (lexeme == "float") {
+                return 6;
+            } else if (lexeme == "char") {
+                return 7;
+            } else if (lexeme == "string") {
+                return 8;
+            } else if (lexeme == "boolean") {
+                return 9;
+            } else if (lexeme == "if") {
+                return 10;
+            } else if (lexeme == "else") {
+                return 11;
+            } else if (lexeme == "elseif") {
+                return 12;
+            } else if (lexeme == "endif") {
+                return 13;
+            } else if (lexeme == "for") {
+                return 14;
+            } else if (lexeme == "do") {
+                return 15;
+            } else if (lexeme == "endfor") {
+                return 16;
+            } else if (lexeme == "while") {
+                return 17;
+            } else if (lexeme == "endwhile") {
+                return 18;
+            } else if (lexeme == "function") {
+                return 19;
+            } else if (lexeme == "endfunction") {
+                return 20;
+            } else if (lexeme == "import") {
+                return 21;
+            } else if (lexeme == "null") {
+                return 22;
+            } else if (lexeme == "read") {
+                return 23;
+            } else if (lexeme == "write") {
+                return 24;
+            } else if (lexeme == "enter") {
+                return 25;
+            } else if (lexeme == "principal") {
+                return 26;
+            } else {
+                return 699;
             }
         case IDENTIFIER:
-
+            return 27;
+        case LIBRARY:
+            return 28;
         case COMMENTARY:
-
+            return 29;
         case INTEGER:
-
+            return 30;
         case FLOAT:
-
+            return 31;
         case FLOATSCI:
-
+            return 32;
         case CHARACTER:
-
+            return 33;
         case STRING:
-
+            return 34;
         case TIMES_SIGN:
-
+            return 35;
         case OVER_SIGN:
-
+            return 36;
         case PLUS_SIGN:
-
+            return 37;
         case MINUS_SIGN:
-
+            return 38;
         case MODULO:
-
+            return 39;
         case OR:
-
+            return 40;
         case AND:
-
+            return 41;
         case NOT:
-
+            return 42;
         case LESSTHAN:
-
+            return 43;
         case LESSEQUALS:
-
+            return 44;
         case GREATERTHAN:
-
+            return 45;
         case GREATEREQUALS:
-
+            return 46;
         case EQUALS:
-
+            return 47;
         case NEQUALS:
-
+            return 48;
         case EQUAL_SIGN:
-
+            return 49;
         case POINT:
-
+            return 50;
         case COMMA:
-
+            return 51;
         case COLON:
-
+            return 52;
         case SEMICOLON:
-
+            return 53;
         case PARENTHESISOPEN:
-
+            return 54;
         case PARENTHESISCLOSE:
-
+            return 55;
         case BRACKETSOPEN:
-
+            return 56;
         case BRACKETSCLOSE:
-
+            return 57;
         case SQUAREBOPEN:
-
+            return 58;
         case SQUAREBCLOSE:
-
+            return 59;
         default:
+            return 699;
     }
 }
