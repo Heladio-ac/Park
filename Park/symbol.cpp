@@ -90,6 +90,8 @@ Symbol::Symbol(int g, bool t) {
     terminal = t;
 }
 
+Symbol::Symbol() {}
+
 int Symbol::hash(int grammeme, std::string lexeme) {
     switch (grammeme) {
         case RESERVED:

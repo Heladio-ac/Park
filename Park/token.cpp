@@ -54,6 +54,8 @@ Token::Token(std::string l, int g) : Symbol(g, true){
     grammeme = g;
 }
 
+Token::Token() : Symbol() {}
+
 std::string Token::getGrammeme() {
     switch (grammeme) {
         // Accepted
