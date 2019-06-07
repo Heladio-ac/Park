@@ -14,12 +14,13 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete parser;
 }
 
 void MainWindow::on_LoadButton_clicked()
 {
     fileName = QFileDialog::getOpenFileName(this,tr("Open eyement file"),
-                                            "/home", tr("eye Files (*.eye)"));
+                                            "", tr("eye Files (*.eye)"));
     if (fileName.isEmpty()) {
         QMessageBox::warning(this, "Warning", "Non existant file");
     } else {

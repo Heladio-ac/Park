@@ -107,19 +107,6 @@
      <string>Syntactic Tree</string>
     </property>
    </widget>
-   <widget class="QTableView" name="TokensTable">
-    <property name="geometry">
-     <rect>
-      <x>830</x>
-      <y>40</y>
-      <width>401</width>
-      <height>331</height>
-     </rect>
-    </property>
-    <property name="cornerButtonEnabled">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QPlainTextEdit" name="CodeText">
     <property name="geometry">
      <rect>
@@ -148,6 +135,16 @@
      <font>
       <pointsize>11</pointsize>
      </font>
+    </property>
+   </widget>
+   <widget class="QTreeView" name="treeView">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>40</y>
+      <width>401</width>
+      <height>331</height>
+     </rect>
     </property>
    </widget>
   </widget>

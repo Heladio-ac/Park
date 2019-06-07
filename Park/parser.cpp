@@ -146,6 +146,7 @@ void Parser::step() {
 }
 
 bool Parser::transduce(std::string &text) {
+    restart();
     symbols.push_back(Symbol(END_OF_FILE, true));
     symbols.push_back(Symbol(PROGRAM, false));
     // Look through the entire text
@@ -194,4 +195,9 @@ bool compare(Symbol symbol, Token token) {
     } else {
         return false;
     }
+}
+
+void Parser::restart() {
+    lexer->restart();
+    symbols.clear();
 }
