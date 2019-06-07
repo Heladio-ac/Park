@@ -12,12 +12,11 @@ public:
 
     Lexer();
     void step(char symbol);
-    Token generateToken(int &index, std::string &text);
+    Token generateToken(unsigned int &index, std::string &text);
 
     int hash(char symbol);
     void restart();
     bool isFinal();
-    bool isReserved();
 };
 
 #endif // LEXER_H

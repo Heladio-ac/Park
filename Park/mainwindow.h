@@ -31,7 +31,7 @@ private:
     Parser *parser;
 
     QString fileName;
-    QString code;
+    std::string code;
 };
 
 #endif // MAINWINDOW_H

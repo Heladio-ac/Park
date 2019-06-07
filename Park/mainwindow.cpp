@@ -1,11 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <iostream>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    parser = new Parser();
 }
 
 MainWindow::~MainWindow()
@@ -22,18 +25,20 @@ void MainWindow::on_LoadButton_clicked()
     } else {
         QFile file(fileName);
         if (file.open(QFile::ReadOnly)){
-            code = file.readAll();
-            ui->CodeText->setPlainText(code);
+            code = file.readAll().toStdString();
+            ui->CodeText->setPlainText(QString::fromStdString(code));
         }
     }
 }
 
 void MainWindow::on_AnalyzeButton_clicked()
 {
-//    parser->transduce(code.toStdString() + " ");
+    code = code + " ";
+    parser->transduce(code);
+
 }
 
 void MainWindow::on_CodeText_textChanged()
 {
-    code = ui->CodeText->toPlainText();
+    code = ui->CodeText->toPlainText().toStdString();
 }

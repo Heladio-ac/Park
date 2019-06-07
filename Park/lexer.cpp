@@ -5,6 +5,7 @@
 #include <ctype.h>
 #include <algorithm>
 #include <initializer_list>
+#include <iostream>
 
 // Delimiting states
 #ifndef TERMINAL_SYMBOLS
@@ -69,7 +70,7 @@
 #ifndef LEXER_FUNC
 #define LEXER_FUNC
     #define IS_VALID !(state >= 500)
-    #define IS_DELIMITER !(state >= 100)
+    #define IS_DELIMITER (state >= 100)
 #endif
 
 static int transition[37][33] = {
@@ -142,6 +143,8 @@ static std::string reservedWords[] = {
     "principal"
 };
 
+bool isReserved(std::string);
+
 Lexer::Lexer(void) {
     state = 0;
     lexeme = "";
@@ -151,13 +154,16 @@ void Lexer::step(char symbol) {
     state = transition[state][hash(symbol)];
 }
 
-Token Lexer::generateToken(int &index, std::string &text) {
+Token Lexer::generateToken(unsigned int &index, std::string &text) {
     restart();
-    while (!IS_DELIMITER) {
+
+    std::cout << "Index: " + std::to_string(index) << std::endl;
+    while (true) {
+        step(text[index]);
+        if (IS_DELIMITER) break;
         if (state) {
             lexeme += text[index];
         }
-        step(text[index]);
         index++;
     }
     if (isFinal()) {
@@ -165,8 +171,8 @@ Token Lexer::generateToken(int &index, std::string &text) {
     } else {
         index--;
     }
-    if (IS_VALID) {
-        state = isReserved() ? RESERVED : IDENTIFIER;
+    if (IS_VALID && state == RESERVED) {
+        state = (isReserved(lexeme) ? RESERVED : IDENTIFIER);
     }
     return Token(lexeme, state);
 }
@@ -261,7 +267,7 @@ bool Lexer::isFinal() {
     }
 }
 
-bool Lexer::isReserved() {
+bool isReserved(std::string lexeme) {
     for (std::string reserved: reservedWords) {
         if (reserved == lexeme) {
             return true;

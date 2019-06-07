@@ -3,6 +3,8 @@
 #include "symbol.h"
 #include "token.h"
 
+#include <iostream>
+
 #ifndef NON_TERMINAL_SYMBOLS
 #define NON_TERMINAL_SYMBOLS
     #define PROGRAM 0
@@ -42,7 +44,6 @@
 #ifndef PARSER_FUNC
 #define PARSER_FUNC
     #define IS_ERROR(A) A.grammeme >= 500
-    #define COMPARE(A, B) A.grammeme == B.grammeme
 #endif
 
 static int prediction[32][60] = {
@@ -80,6 +81,8 @@ static int prediction[32][60] = {
     {601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 67,  601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601, 601}
 };
 
+bool compare(Symbol, Token);
+
 Parser::Parser() {
     lexer = new Lexer();
 }
@@ -97,22 +100,49 @@ void Parser::step() {
 void Parser::transduce(std::string &text) {
     symbols.push_back(Symbol(PROGRAM, false));
     // Look through the entire text
-    for (int i = 0; i < text.length(); i++) {
+    bool next = false;
+    for (unsigned int i = 0; i < text.length(); i++) {
         token = lexer->generateToken(i, text);
-        if (IS_ERROR(token)) {
-            // Lexical error
-        } else if (COMPARE(symbols.back(), token)) {
-            symbols.pop_back();
-        } else if (isValidDerivation()) {
-            step();
-        } else {
-            // Syntactical error
+        std::cout << "Token's grammeme: " + token.getGrammeme() << std::endl;
+        std::cout << "Token's lexeme: " + token.lexeme << std::endl;
+        next = false;
+        while (!next) {
+            if (IS_ERROR(token)) {
+                // Lexical error
+                std::cout << "Lexical error" << std::endl;
+                return;
+            } else if (compare(symbols.back(), token)) {
+                symbols.pop_back();
+                next = true;
+            } else if (symbols.back().terminal) {
+                // Syntactical error
+                std::cout << "Syntactical error, non matching terminal" << std::endl;
+                return;
+            }   else if (isValidDerivation()) {
+                std::cout << "Valid derivation" << std::endl;
+                step();
+            } else {
+                // Syntactical error
+                std::cout << "Syntactical error, not valid derivation" << std::endl;
+                return;
+            }
         }
     }
 }
 
 bool Parser::isValidDerivation() {
+    std::cout << "Verifying derivation" << std::endl;
     int column = Symbol::hash(token.grammeme, token.lexeme);
-    int row = symbols.back().grammeme;
-    return prediction[row][column] < 600;
+    Symbol symbol = symbols.back();
+    int row = symbol.grammeme;
+    int production = prediction[row][column];
+    return production < 600;
+}
+
+bool compare(Symbol symbol, Token token) {
+    if (symbol.terminal) {
+        return symbol.grammeme == Symbol::hash(token.grammeme, token.lexeme);
+    } else {
+        return false;
+    }
 }
