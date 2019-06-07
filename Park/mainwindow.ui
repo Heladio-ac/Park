@@ -92,9 +92,9 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>990</x>
+      <x>970</x>
       <y>10</y>
-      <width>101</width>
+      <width>151</width>
       <height>21</height>
      </rect>
     </property>
@@ -104,7 +104,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Lexemes</string>
+     <string>Syntactic Tree</string>
     </property>
    </widget>
    <widget class="QTableView" name="TokensTable">
@@ -120,16 +120,6 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QTableView" name="ErrorsTable">
-    <property name="geometry">
-     <rect>
-      <x>830</x>
-      <y>410</y>
-      <width>401</width>
-      <height>211</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPlainTextEdit" name="CodeText">
     <property name="geometry">
      <rect>
@@ -137,6 +127,21 @@
       <y>40</y>
       <width>791</width>
       <height>581</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="ErrorText">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>410</y>
+      <width>401</width>
+      <height>211</height>
      </rect>
     </property>
     <property name="font">

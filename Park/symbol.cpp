@@ -39,6 +39,7 @@
 
 #ifndef TERMINAL_SYMBOLS
     #define TERMINAL_SYMBOLS
+    #define END_OF_FILE -1
     //Accepting states
     #define RESERVED 101
     #define IDENTIFIER 102
@@ -218,6 +219,8 @@ int Symbol::hash(int grammeme, std::string lexeme) {
             return 58;
         case SQUAREBCLOSE:
             return 59;
+        case END_OF_FILE:
+            return -1;
         default:
             return 699;
     }

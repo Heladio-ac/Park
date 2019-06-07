@@ -3,6 +3,7 @@
 // Delimiting states
 #ifndef TERMINAL_SYMBOLS
 #define TERMINAL_SYMBOLS
+    #define END_OF_FILE -1
     //Accepting states
     #define RESERVED 101
     #define IDENTIFIER 102
@@ -127,6 +128,8 @@ std::string Token::getGrammeme() {
             return "Open Square Brackets";
         case SQUAREBCLOSE:
             return "Close Square Brackets";
+        case END_OF_FILE:
+            return "End of file";
         // Errors
         case ERRORIDENTIFIER:
             return "Identifiers can not end with a _";

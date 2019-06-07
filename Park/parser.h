@@ -15,7 +15,7 @@ public:
 
     Parser();
     void step();
-    void transduce(std::string &text);
+    bool transduce(std::string &text);
     bool isValidDerivation();
 };
 

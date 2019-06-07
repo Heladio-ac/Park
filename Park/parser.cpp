@@ -41,6 +41,54 @@
     #define ENTER 31
 #endif
 
+#ifndef TERMINAL_SYMBOLS
+    #define TERMINAL_SYMBOLS
+    #define END_OF_FILE -1
+    //Accepting states
+    #define RESERVED 101
+    #define IDENTIFIER 102
+    #define LIBRARY 103
+    #define COMMENTARY 104
+    #define INTEGER 105
+    #define FLOAT 106
+    #define FLOATSCI 107
+    #define CHARACTER 108
+    #define STRING 109
+    #define TIMES_SIGN 110
+    #define OVER_SIGN 111
+    #define PLUS_SIGN 112
+    #define MINUS_SIGN 113
+    #define MODULO 114
+    #define OR 115
+    #define AND 116
+    #define NOT 117
+    #define LESSTHAN 118
+    #define LESSEQUALS 119
+    #define GREATERTHAN 120
+    #define GREATEREQUALS 121
+    #define EQUALS 122
+    #define NEQUALS 123
+    #define EQUAL_SIGN 124
+    #define POINT 125
+    #define COMMA 126
+    #define COLON 127
+    #define SEMICOLON 128
+    #define PARENTHESISOPEN 129
+    #define PARENTHESISCLOSE 130
+    #define BRACKETSOPEN 131
+    #define BRACKETSCLOSE 132
+    #define SQUAREBOPEN 133
+    #define SQUAREBCLOSE 134
+    //Error states
+    #define ERRORIDENTIFIER 501
+    #define ERRORLIBRARY 502
+    #define ERRORFLOAT 503
+    #define ERRORFLOATSCI 504
+    #define ERRORCHAR 505
+    #define ERROROR 506
+    #define ERRORAND 507
+    #define ERRORUNKNOWN 599
+#endif
 #ifndef PARSER_FUNC
 #define PARSER_FUNC
     #define IS_ERROR(A) A.grammeme >= 500
@@ -97,7 +145,8 @@ void Parser::step() {
     }
 }
 
-void Parser::transduce(std::string &text) {
+bool Parser::transduce(std::string &text) {
+    symbols.push_back(Symbol(END_OF_FILE, true));
     symbols.push_back(Symbol(PROGRAM, false));
     // Look through the entire text
     bool next = false;
@@ -110,29 +159,31 @@ void Parser::transduce(std::string &text) {
             if (IS_ERROR(token)) {
                 // Lexical error
                 std::cout << "Lexical error" << std::endl;
-                return;
+                return false;
             } else if (compare(symbols.back(), token)) {
                 symbols.pop_back();
                 next = true;
+                std::cout << "Top of stack " + std::to_string(symbols.back().grammeme) << std::endl;
+                std::cout << "Size of stack " + std::to_string(symbols.size()) << std::endl;
             } else if (symbols.back().terminal) {
                 // Syntactical error
                 std::cout << "Syntactical error, non matching terminal" << std::endl;
-                return;
+                return false;
             }   else if (isValidDerivation()) {
                 step();
             } else {
                 // Syntactical error
                 std::cout << "Syntactical error, not valid derivation" << std::endl;
-                return;
+                return false;
             }
         }
     }
+    return true;
 }
 
 bool Parser::isValidDerivation() {
     int column = Symbol::hash(token.grammeme, token.lexeme);
     int row = symbols.back().grammeme;
-    std::cout << "(Row: " + std::to_string(row) + ", " + "Column: " + std::to_string(column) + ")" << std::endl;
     int production = prediction[row][column];
     return production < 600;
 }
