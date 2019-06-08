@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <iostream>
+
+void addSubTree(tree<std::string>, tree<std::string>::sibling_iterator, QStandardItem*);
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -34,15 +35,47 @@ void MainWindow::on_LoadButton_clicked()
 
 void MainWindow::on_AnalyzeButton_clicked()
 {
+    ui->ErrorText->clear();
+    ui->treeView->reset();
     code = code + " ";
     if (parser->transduce(code)) {
-        std::cout << "Correct Syntax" << std::endl;
+        showSyntaxTree();
     } else {
-        std::cout << parser->error << std::endl;
+        showError();
     }
 }
 
 void MainWindow::on_CodeText_textChanged()
 {
     code = ui->CodeText->toPlainText().toStdString();
+}
+
+void MainWindow::showSyntaxTree()
+{
+    QStandardItem* root = new QStandardItem("Syntax Tree");
+    tree<std::string> t = parser->syntaxTree;
+    for(tree<std::string>::sibling_iterator iRoots = ++t.begin(); iRoots != t.end(); ++iRoots) {
+        addSubTree(t,iRoots, root);
+    }
+    QStandardItemModel* model = new QStandardItemModel();
+    model->appendRow(root);
+    ui->treeView->setModel(model);
+}
+
+void MainWindow::showError()
+{
+    ui->ErrorText->setPlainText(QString::fromStdString(parser->error));
+}
+
+void addSubTree(tree<std::string> t, tree<std::string>::sibling_iterator iRoot, QStandardItem* item) {
+    if(t.empty()) return;
+    QStandardItem* child = new QStandardItem(QString::fromStdString(*iRoot));
+    item->appendRow(child);
+    if (t.number_of_children(iRoot) > 0) {
+        tree<std::string>::sibling_iterator iChildren;
+        for (iChildren = t.begin(iRoot); iChildren != t.end(iRoot); ++iChildren) {
+            // recursively add child
+            addSubTree(t, iChildren, child);
+        }
+    }
 }

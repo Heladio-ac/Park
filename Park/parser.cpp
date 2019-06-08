@@ -155,6 +155,9 @@ void Parser::step() {
     } else {
         for (Symbol s: productions) {
             symbols.push_back(s);
+        }
+        productions.reverse();
+        for (Symbol s: productions) {
             syntaxTree.append_child(loc, s.getGrammeme());
         }
     }
@@ -196,8 +199,6 @@ bool Parser::transduce(std::string &text) {
             }
         }
     }
-    kptree::print_tree_bracketed(syntaxTree);
-    std::cout << std::endl;
     if (symbols.empty()) return true;
     else return false;
 }
@@ -220,4 +221,5 @@ bool compare(Symbol symbol, Token token) {
 void Parser::restart() {
     lexer->restart();
     symbols.clear();
+    syntaxTree.clear();
 }

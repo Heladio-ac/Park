@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1239</width>
+    <width>1371</width>
     <height>704</height>
    </rect>
   </property>
@@ -17,9 +17,9 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>1000</x>
-      <y>380</y>
-      <width>71</width>
+      <x>1070</x>
+      <y>470</y>
+      <width>61</width>
       <height>21</height>
      </rect>
     </property>
@@ -29,7 +29,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Errors</string>
+     <string>Error</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -79,9 +79,9 @@
    <widget class="QPushButton" name="AnalyzeButton">
     <property name="geometry">
      <rect>
-      <x>830</x>
+      <x>820</x>
       <y>630</y>
-      <width>401</width>
+      <width>541</width>
       <height>23</height>
      </rect>
     </property>
@@ -92,7 +92,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>970</x>
+      <x>1050</x>
       <y>10</y>
       <width>151</width>
       <height>21</height>
@@ -104,7 +104,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Syntactic Tree</string>
+     <string>Syntax Tree</string>
     </property>
    </widget>
    <widget class="QPlainTextEdit" name="CodeText">
@@ -125,10 +125,10 @@
    <widget class="QPlainTextEdit" name="ErrorText">
     <property name="geometry">
      <rect>
-      <x>830</x>
-      <y>410</y>
-      <width>401</width>
-      <height>211</height>
+      <x>820</x>
+      <y>500</y>
+      <width>541</width>
+      <height>121</height>
      </rect>
     </property>
     <property name="font">
@@ -140,10 +140,10 @@
    <widget class="QTreeView" name="treeView">
     <property name="geometry">
      <rect>
-      <x>830</x>
+      <x>820</x>
       <y>40</y>
-      <width>401</width>
-      <height>331</height>
+      <width>541</width>
+      <height>421</height>
      </rect>
     </property>
    </widget>
@@ -153,7 +153,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1239</width>
+     <width>1371</width>
      <height>20</height>
     </rect>
    </property>

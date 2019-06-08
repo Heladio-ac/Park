@@ -2,8 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStandardItem>
+#include <QStandardItemModel>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <iostream>
 #include "parser.h"
 
 namespace Ui {
@@ -17,6 +20,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void showSyntaxTree(void);
+    void showError(void);
 
 private slots:
     void on_LoadButton_clicked();
