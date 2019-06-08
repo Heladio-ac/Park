@@ -156,7 +156,6 @@ void Lexer::step(char symbol) {
 
 Token Lexer::generateToken(unsigned int &index, std::string &text) {
     restart();
-    std::cout << "Index: " + std::to_string(index) << std::endl;
     while (true) {
         step(text[index]);
         if (IS_DELIMITER) break;

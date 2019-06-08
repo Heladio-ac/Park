@@ -58,6 +58,9 @@ Token::Token(std::string l, int g) : Symbol(g, true){
 Token::Token() : Symbol() {}
 
 std::string Token::getGrammeme() {
+    if (!terminal) {
+        return Symbol::getGrammeme();
+    }
     switch (grammeme) {
         // Accepted
         case RESERVED:

@@ -11,6 +11,7 @@ class Symbol {
 
         Symbol(void);
         Symbol(int, bool);
+        std::string getGrammeme(void);
         static std::list<Symbol> derive(int);
         static int hash(int, std::string);
 };

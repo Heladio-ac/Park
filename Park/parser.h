@@ -3,13 +3,14 @@
 
 #include <list>
 #include <string>
+
 #include "token.h"
 
 class Lexer;
 class Symbol;
 class Parser {
 public:
-    Lexer *lexer;
+    Lexer* lexer;
     std::list<Symbol> symbols;
     Token token;
 

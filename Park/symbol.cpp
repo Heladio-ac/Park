@@ -467,3 +467,74 @@ std::list<Symbol> Symbol::derive(int production) {
     }
     return symbols;
 }
+
+std::string Symbol::getGrammeme() {
+    switch (grammeme) {
+        case PROGRAM:
+            return "Program";
+        case DECL_LIBRARIES:
+            return "Libraries declaration";
+        case DECL_VARIABLES:
+            return "Variables declaration";
+        case VARIABLES:
+            return "Variables";
+        case MORE_VARIABLES:
+            return "More variables";
+        case TYPE:
+            return "Variable type";
+        case STATEMENTS:
+            return "Statements";
+        case STATEMENT:
+            return "Statement";
+        case ASSIGNMENT:
+            return "Assignment";
+        case EXPRESSION_0:
+            return "Zeroth order expression";
+        case DISJUNCTION:
+            return "Logical disjunction";
+        case EXPRESSION_1:
+            return "First order expression";
+        case CONJUNCTION:
+            return "Logical conjunction";
+        case EXPRESSION_2:
+            return "Second order expression";
+        case NEGATION:
+            return "Logical negation";
+        case EXPRESSION_3:
+            return "Third order expression";
+        case COMPARISON:
+            return "Comparison";
+        case RELATIONAL_OPERATOR:
+            return "Relational operator";
+        case EXPRESSION_4:
+            return "Fourth order expression";
+        case ADDITION:
+            return "Arithmetical addition";
+        case ADDEND:
+            return "Addend expression";
+        case MULTIPLICATION:
+            return "Arithmetical multiplication";
+        case FACTOR:
+            return "Factor expression";
+        case IF:
+            return "IF statement";
+        case ELSE:
+            return "ELSE clause";
+        case WHILE:
+            return "WHILE loop";
+        case FOR:
+            return "FOR loop";
+        case EXPRESSIONS:
+            return "Expressions";
+        case MORE_EXPRESSIONS:
+            return "More expressions";
+        case READ:
+            return "READ instruction";
+        case WRITE:
+            return "WRITE instruction";
+        case ENTER:
+            return "Enter";
+        default:
+            return "Unknown symbol";
+    }
+}

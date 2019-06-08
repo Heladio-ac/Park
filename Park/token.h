@@ -11,6 +11,6 @@ public:
 
     Token(void);
     Token(std::string l, int g);
-    std::string getGrammeme();
+    std::string getGrammeme(void);
 };
 #endif

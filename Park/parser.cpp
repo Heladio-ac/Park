@@ -4,6 +4,7 @@
 #include "token.h"
 
 #include <iostream>
+#include <algorithm>
 
 #ifndef NON_TERMINAL_SYMBOLS
 #define NON_TERMINAL_SYMBOLS
@@ -136,8 +137,9 @@ Parser::Parser() {
 }
 
 void Parser::step() {
+    Symbol top = symbols.back();
     int column = Symbol::hash(token.grammeme, token.lexeme);
-    int row = symbols.back().grammeme;
+    int row = top.grammeme;
     int production = prediction[row][column];
     symbols.pop_back();
     for (Symbol s: Symbol::derive(production)) {
@@ -147,25 +149,25 @@ void Parser::step() {
 
 bool Parser::transduce(std::string &text) {
     restart();
-    symbols.push_back(Symbol(END_OF_FILE, true));
-    symbols.push_back(Symbol(PROGRAM, false));
+    Symbol program = Symbol(PROGRAM, false);
+    Symbol eof = Symbol(END_OF_FILE, true);
+    symbols.push_back(eof);
+    symbols.push_back(program);
     // Look through the entire text
     bool next = false;
+    Symbol top;
     for (unsigned int i = 0; i < text.length(); i++) {
         token = lexer->generateToken(i, text);
-        std::cout << "Token's grammeme: " + token.getGrammeme() << std::endl;
-        std::cout << "Token's lexeme: " + token.lexeme << std::endl;
         next = false;
         while (!next) {
+            top = symbols.back();
             if (IS_ERROR(token)) {
                 // Lexical error
                 std::cout << "Lexical error" << std::endl;
                 return false;
-            } else if (compare(symbols.back(), token)) {
+            } else if (compare(top, token)) {
                 symbols.pop_back();
                 next = true;
-                std::cout << "Top of stack " + std::to_string(symbols.back().grammeme) << std::endl;
-                std::cout << "Size of stack " + std::to_string(symbols.size()) << std::endl;
             } else if (symbols.back().terminal) {
                 // Syntactical error
                 std::cout << "Syntactical error, non matching terminal" << std::endl;
@@ -179,7 +181,8 @@ bool Parser::transduce(std::string &text) {
             }
         }
     }
-    return true;
+    if (symbols.empty()) return true;
+    else return false;
 }
 
 bool Parser::isValidDerivation() {

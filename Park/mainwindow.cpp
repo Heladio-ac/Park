@@ -35,7 +35,9 @@ void MainWindow::on_LoadButton_clicked()
 void MainWindow::on_AnalyzeButton_clicked()
 {
     code = code + " ";
-    parser->transduce(code);
+    if (parser->transduce(code)) {
+        std::cout << "Correct Syntax" << std::endl;
+    }
 
 }
 
