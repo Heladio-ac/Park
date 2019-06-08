@@ -3,6 +3,8 @@
 #include "symbol.h"
 #include "token.h"
 
+#include "tree_util.hh"
+
 #include <iostream>
 #include <algorithm>
 
@@ -142,15 +144,28 @@ void Parser::step() {
     int row = top.grammeme;
     int production = prediction[row][column];
     symbols.pop_back();
-    for (Symbol s: Symbol::derive(production)) {
-        symbols.push_back(s);
+    std::list<Symbol> productions = Symbol::derive(production);
+    tree<std::string>::iterator loc = syntaxTree.begin();
+    tree<std::string>::iterator end = syntaxTree.end();
+    do {
+        loc = std::find(++loc, end, top.getGrammeme());
+    } while (loc != end && loc.number_of_children());
+    if (productions.empty()) {
+        syntaxTree.append_child(loc, "ε");
+    } else {
+        for (Symbol s: productions) {
+            symbols.push_back(s);
+            syntaxTree.append_child(loc, s.getGrammeme());
+        }
     }
 }
 
 bool Parser::transduce(std::string &text) {
     restart();
     Symbol program = Symbol(PROGRAM, false);
-    Symbol eof = Symbol(END_OF_FILE, true);
+    Token eof = Token("$", END_OF_FILE);
+    syntaxTree.insert(syntaxTree.begin(), program.getGrammeme());
+    syntaxTree.insert(syntaxTree.begin(), eof.getGrammeme());
     symbols.push_back(eof);
     symbols.push_back(program);
     // Look through the entire text
@@ -181,6 +196,8 @@ bool Parser::transduce(std::string &text) {
             }
         }
     }
+    kptree::print_tree_bracketed(syntaxTree);
+    std::cout << std::endl;
     if (symbols.empty()) return true;
     else return false;
 }

@@ -469,72 +469,201 @@ std::list<Symbol> Symbol::derive(int production) {
 }
 
 std::string Symbol::getGrammeme() {
-    switch (grammeme) {
-        case PROGRAM:
-            return "Program";
-        case DECL_LIBRARIES:
-            return "Libraries declaration";
-        case DECL_VARIABLES:
-            return "Variables declaration";
-        case VARIABLES:
-            return "Variables";
-        case MORE_VARIABLES:
-            return "More variables";
-        case TYPE:
-            return "Variable type";
-        case STATEMENTS:
-            return "Statements";
-        case STATEMENT:
-            return "Statement";
-        case ASSIGNMENT:
-            return "Assignment";
-        case EXPRESSION_0:
-            return "Zeroth order expression";
-        case DISJUNCTION:
-            return "Logical disjunction";
-        case EXPRESSION_1:
-            return "First order expression";
-        case CONJUNCTION:
-            return "Logical conjunction";
-        case EXPRESSION_2:
-            return "Second order expression";
-        case NEGATION:
-            return "Logical negation";
-        case EXPRESSION_3:
-            return "Third order expression";
-        case COMPARISON:
-            return "Comparison";
-        case RELATIONAL_OPERATOR:
-            return "Relational operator";
-        case EXPRESSION_4:
-            return "Fourth order expression";
-        case ADDITION:
-            return "Arithmetical addition";
-        case ADDEND:
-            return "Addend expression";
-        case MULTIPLICATION:
-            return "Arithmetical multiplication";
-        case FACTOR:
-            return "Factor expression";
-        case IF:
-            return "IF statement";
-        case ELSE:
-            return "ELSE clause";
-        case WHILE:
-            return "WHILE loop";
-        case FOR:
-            return "FOR loop";
-        case EXPRESSIONS:
-            return "Expressions";
-        case MORE_EXPRESSIONS:
-            return "More expressions";
-        case READ:
-            return "READ instruction";
-        case WRITE:
-            return "WRITE instruction";
-        case ENTER:
-            return "Enter";
-        default:
-            return "Unknown symbol";
+    if (terminal) {
+        switch (grammeme) {
+            case 0:
+                return "class";
+            case 1:
+                return "begin";
+            case 2:
+                return "end";
+            case 3:
+                return "def";
+            case 4:
+                return "as";
+            case 5:
+                return "integer";
+            case 6:
+                return "float";
+            case 7:
+                return "char";
+            case 8:
+                return "string";
+            case 9:
+                return "boolean";
+            case 10:
+                return "if";
+            case 11:
+                return "else";
+            case 12:
+                return "elseif";
+            case 13:
+                return "endif";
+            case 14:
+                return "for";
+            case 15:
+                return "do";
+            case 16:
+                return "endfor";
+            case 17:
+                return "while";
+            case 18:
+                return "endwhile";
+            case 19:
+                return "function";
+            case 20:
+                return "endfunction";
+            case 21:
+                return "import";
+            case 22:
+                return "null";
+            case 23:
+                return "read";
+            case 24:
+                return "write";
+            case 25:
+                return "enter";
+            case 26:
+                return "principal";
+            case 27:
+                return "Identifier";
+            case 28:
+                return "Library identifier";
+            case 29:
+                return "Commentary";
+            case 30:
+                return "Integer constant";
+            case 31:
+                return "Floating point constant";
+            case 32:
+                return "Floating point constant with scientific notation";
+            case 33:
+                return "Character constant";
+            case 34:
+                return "String constant";
+            case 35:
+                return "*";
+            case 36:
+                return "/";
+            case 37:
+                return "+";
+            case 38:
+                return "-";
+            case 39:
+                return "%";
+            case 40:
+                return "OR";
+            case 41:
+                return "AND";
+            case 42:
+                return "NOT";
+            case 43:
+                return "<";
+            case 44:
+                return "<=";
+            case 45:
+                return ">";
+            case 46:
+                return ">=";
+            case 47:
+                return "==";
+            case 48:
+                return "!=";
+            case 49:
+                return "=";
+            case 50:
+                return ".";
+            case 51:
+                return ",";
+            case 52:
+                return ":";
+            case 53:
+                return ";";
+            case 54:
+                return "(";
+            case 55:
+                return ")";
+            case 56:
+                return "{";
+            case 57:
+                return "}";
+            case 58:
+                return "[";
+            case 59:
+                return "]";
+            case -1:
+                return "EOF";
+            case 699:
+                return "ERROR";
+        }
+    } else {
+        switch (grammeme) {
+            case PROGRAM:
+                return "Program";
+            case DECL_LIBRARIES:
+                return "Libraries declaration";
+            case DECL_VARIABLES:
+                return "Variables declaration";
+            case VARIABLES:
+                return "Variables";
+            case MORE_VARIABLES:
+                return "More variables";
+            case TYPE:
+                return "Variable type";
+            case STATEMENTS:
+                return "Statements";
+            case STATEMENT:
+                return "Statement";
+            case ASSIGNMENT:
+                return "Assignment";
+            case EXPRESSION_0:
+                return "Zeroth order expression";
+            case DISJUNCTION:
+                return "Logical disjunction";
+            case EXPRESSION_1:
+                return "First order expression";
+            case CONJUNCTION:
+                return "Logical conjunction";
+            case EXPRESSION_2:
+                return "Second order expression";
+            case NEGATION:
+                return "Logical negation";
+            case EXPRESSION_3:
+                return "Third order expression";
+            case COMPARISON:
+                return "Comparison";
+            case RELATIONAL_OPERATOR:
+                return "Relational operator";
+            case EXPRESSION_4:
+                return "Fourth order expression";
+            case ADDITION:
+                return "Arithmetical addition";
+            case ADDEND:
+                return "Addend expression";
+            case MULTIPLICATION:
+                return "Arithmetical multiplication";
+            case FACTOR:
+                return "Factor expression";
+            case IF:
+                return "IF statement";
+            case ELSE:
+                return "ELSE clause";
+            case WHILE:
+                return "WHILE loop";
+            case FOR:
+                return "FOR loop";
+            case EXPRESSIONS:
+                return "Expressions";
+            case MORE_EXPRESSIONS:
+                return "More expressions";
+            case READ:
+                return "READ instruction";
+            case WRITE:
+                return "WRITE instruction";
+            case ENTER:
+                return "Enter";
+            default:
+                return "Unknown symbol";
+        }
     }
 }

@@ -5,7 +5,6 @@
 #include <ctype.h>
 #include <algorithm>
 #include <initializer_list>
-#include <iostream>
 
 // Delimiting states
 #ifndef TERMINAL_SYMBOLS
