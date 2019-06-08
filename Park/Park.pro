@@ -37,7 +37,9 @@ HEADERS += \
         token.h \
         lexer.h \
         parser.h \
-        symbol.h
+        symbol.h \
+        tree.hh \
+        tree_util.hh
 
 FORMS += \
         mainwindow.ui

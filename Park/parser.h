@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 
+#include "tree.hh"
 #include "token.h"
 
 class Lexer;
@@ -13,6 +14,8 @@ public:
     Lexer* lexer;
     std::list<Symbol> symbols;
     Token token;
+    std::string error;
+    tree<std::string> syntaxTree;
 
     Parser();
     void step();

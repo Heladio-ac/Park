@@ -163,20 +163,20 @@ bool Parser::transduce(std::string &text) {
             top = symbols.back();
             if (IS_ERROR(token)) {
                 // Lexical error
-                std::cout << "Lexical error" << std::endl;
+                error = "Lexical error";
                 return false;
             } else if (compare(top, token)) {
                 symbols.pop_back();
                 next = true;
             } else if (symbols.back().terminal) {
                 // Syntactical error
-                std::cout << "Syntactical error, non matching terminal" << std::endl;
+                error = "Syntactical error, non matching terminal";
                 return false;
             }   else if (isValidDerivation()) {
                 step();
             } else {
                 // Syntactical error
-                std::cout << "Syntactical error, not valid derivation" << std::endl;
+                error = "Syntactical error, not valid derivation";
                 return false;
             }
         }
