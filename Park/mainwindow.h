@@ -6,7 +6,9 @@
 #include <QStandardItemModel>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QTextStream>
 #include <iostream>
+
 #include "parser.h"
 
 namespace Ui {
@@ -29,6 +31,10 @@ private slots:
     void on_AnalyzeButton_clicked();
 
     void on_CodeText_textChanged();
+
+    void on_SaveButton_clicked();
+
+    void save();
 
 private:
     Ui::MainWindow *ui;

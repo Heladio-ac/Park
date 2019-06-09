@@ -78,3 +78,30 @@ void addSubTree(tree<std::string> t, tree<std::string>::sibling_iterator iRoot, 
         }
     }
 }
+
+void MainWindow::on_SaveButton_clicked()
+{
+    if (fileName.isEmpty()) {
+        fileName = QFileDialog::getSaveFileName(this,tr("Save eyement file"),
+                                                 "", tr("eye Files (*.eye)"));
+        save();
+    } else {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Save File", "Do you wish to save on " + fileName + "?",
+                                        QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::No) {
+            fileName = QFileDialog::getSaveFileName(this,tr("Save eyement file"),
+                                                 "", tr("eye Files (*.eye)"));
+        }
+        save();
+    }
+}
+
+void MainWindow::save() {
+    QFile file(fileName);
+    file.resize(0);
+    if (file.open(QFile::ReadWrite)){
+        QTextStream stream( &file );
+        stream << QString::fromStdString(code) << endl;
+    }
+}
