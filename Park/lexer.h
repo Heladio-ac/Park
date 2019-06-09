@@ -1,6 +1,11 @@
 #ifndef LEXER_H
 #define LEXER_H
 
+#include "token.h"
+
+#include <ctype.h>
+#include <algorithm>
+#include <initializer_list>
 #include <string>
 
 class Token;

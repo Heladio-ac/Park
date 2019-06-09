@@ -181,7 +181,7 @@ bool Parser::transduce(std::string &text) {
             top = symbols.back();
             if (IS_ERROR(token)) {
                 // Lexical error
-                error = "Lexical error";
+                error = "Lexical error: " + token.getGrammeme();
                 return false;
             } else if (compare(top, token)) {
                 symbols.pop_back();

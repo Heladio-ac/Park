@@ -36,7 +36,7 @@ void MainWindow::on_LoadButton_clicked()
 void MainWindow::on_AnalyzeButton_clicked()
 {
     ui->ErrorText->clear();
-    ui->treeView->reset();
+    ui->treeView->setModel(new QStandardItemModel());
     code = code + " ";
     if (parser->transduce(code)) {
         showSyntaxTree();
