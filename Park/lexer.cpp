@@ -1,7 +1,5 @@
 #include "lexer.h"
 
-#include <iostream>
-
 // Delimiting states
 #ifndef TERMINAL_SYMBOLS
 #define TERMINAL_SYMBOLS
@@ -158,7 +156,6 @@ Token Lexer::generateToken(unsigned int &index, std::string &text) {
             lexeme += text[index];
         }
         index++;
-        std::cout << index << std::endl;
     }
     if (index == text.length()) {
         return Token("EOF", -1);

@@ -21,7 +21,6 @@ public:
     void step();
     void restart();
     bool transduce(std::string &text);
-    bool isValidDerivation();
 };
 
 #endif

@@ -92,6 +92,7 @@
     #define ERRORAND 507
     #define ERRORUNKNOWN 599
 #endif
+
 #ifndef PARSER_FUNC
 #define PARSER_FUNC
     #define IS_ERROR(A) A.grammeme >= 500
@@ -125,7 +126,7 @@ static int prediction[32][60] = {
     {625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 58,  625, 59,  625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625, 625},
     {626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 60,  626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626, 626},
     {627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 61,  627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627, 627},
-    {628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 62,  628, 628, 62,  62,  62,  62,  62,  628, 628, 628, 628, 628, 628, 628, 62,  628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 62,  628, 628, 628, 628, 628, 628},
+    {628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 62,  628, 628, 62,  62,  62,  62,  62,  628, 628, 628, 628, 628, 628, 628, 62,  628, 628, 628, 628, 628, 628, 628, 628, 628, 628, 628,  62, 628, 628, 628, 628, 628},
     {629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 629, 63,  629, 629, 629, 64,  629, 629, 629, 629},
     {630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 65,  630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630, 630},
     {631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 66,  631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631, 631},
@@ -133,6 +134,7 @@ static int prediction[32][60] = {
 };
 
 bool compare(Symbol, Token);
+std::string getError(int);
 
 Parser::Parser() {
     lexer = new Lexer();
@@ -174,6 +176,7 @@ bool Parser::transduce(std::string &text) {
     // Look through the entire text
     bool next = false;
     Symbol top;
+    int production, column, row;
     for (unsigned int i = 0; i < text.length(); i++) {
         token = lexer->generateToken(i, text);
         next = false;
@@ -188,14 +191,20 @@ bool Parser::transduce(std::string &text) {
                 next = true;
             } else if (symbols.back().terminal) {
                 // Syntactical error
-                error = "Syntactical error, non matching terminal";
+                error = "Syntactical error, non matching terminal\n";
+                error += "Expected \"" + symbols.back().getGrammeme() + "\", but found \"" + token.getGrammeme() + "\"";
                 return false;
-            }   else if (isValidDerivation()) {
-                step();
             } else {
-                // Syntactical error
-                error = "Syntactical error, not valid derivation";
-                return false;
+                column = Symbol::hash(token.grammeme, token.lexeme);
+                row = symbols.back().grammeme;
+                production = prediction[row][column];
+                if (production < 600) {
+                    step();
+                } else {
+                    // Syntactical error
+                    error = "Syntactical error, not valid derivation:\n" + getError(production);
+                    return false;
+                }
             }
         }
     }
@@ -203,11 +212,10 @@ bool Parser::transduce(std::string &text) {
     else return false;
 }
 
-bool Parser::isValidDerivation() {
-    int column = Symbol::hash(token.grammeme, token.lexeme);
-    int row = symbols.back().grammeme;
-    int production = prediction[row][column];
-    return production < 600;
+void Parser::restart() {
+    lexer->restart();
+    symbols.clear();
+    syntaxTree.clear();
 }
 
 bool compare(Symbol symbol, Token token) {
@@ -218,8 +226,73 @@ bool compare(Symbol symbol, Token token) {
     }
 }
 
-void Parser::restart() {
-    lexer->restart();
-    symbols.clear();
-    syntaxTree.clear();
+std::string getError(int error) {
+    switch (error) {
+        case 601:
+            return "Program’s head: The program must start with either library declaration or class definition";
+        case 602:
+            return "Program’s head: Expected class definition or the import of a library";
+        case 603:
+            return "Expected variable declaration or a valid statement";
+        case 604:
+            return "Variables: Expected a variable identifier";
+        case 605:
+            return "Variables declaration: Expected a , or the “as” reserved word";
+        case 606:
+            return "Type specification: Invalid type";
+        case 607:
+            return "Expected a valid statement or the “end” reserved word";
+        case 608:
+            return "Statement: Invalid start of statement";
+        case 609:
+            return "Assignment: Invalid start of assignment statement";
+        case 610:
+            return "Expression: Invalid start of expression";
+        case 611:
+            return "Expression: Invalid expression, expected a delimiter or a logical disjunction";
+        case 612:
+            return "Expression: Invalid start of expression";
+        case 613:
+            return "Expression: Invalid expression, expected a delimiter or a logical operation";
+        case 614:
+            return "Expression: Invalid start of expression";
+        case 615:
+            return "Expression: Invalid expression, expected a delimiter or a logical negation";
+        case 616:
+            return "Expression: Invalid start of expression";
+        case 617:
+            return "Expression: Invalid expression, expected a delimiter, a logical operation or a relational operator";
+        case 618:
+            return "Expression: Invalid expression, expected a relational operator";
+        case 619:
+            return "Expression: Invalid start of expression";
+        case 620:
+            return "Expression: Invalid expression, expected a delimiter, a logical operation, a relational operator or an arithmetic addition";
+        case 621:
+            return "Expression: Invalid start of expression";
+        case 622:
+            return "Expression: Invalid expression, expected a delimiter, a logical operation, a relational operator or an arithmetic operation";
+        case 623:
+            return "Expression: Invalid start of expression";
+        case 624:
+            return "If statement: Expected the reserved word “if”";
+        case 625:
+            return "If statement: Expected the reserved word “else” or “endif”";
+        case 626:
+            return "While loop: Expected the reserved word “while”";
+        case 627:
+            return "For loop: Expected the reserved word “while”";
+        case 628:
+            return "Expressions: Invalid start of expression";
+        case 629:
+            return "Expressions: Invalid expressions, expected a , or a closing parenthesis";
+        case 630:
+            return "Read instruction: Expected the reserved word “read”";
+        case 631:
+            return "Write instruction: Expected the reserved word “write”";
+        case 632:
+            return "Enter statement: Expected the reserved word “enter”";
+        default:
+            return "Unknown error";
+    }
 }
