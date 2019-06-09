@@ -22,7 +22,7 @@ public:
     tree<std::string> syntaxTree;
 
     Parser();
-    void step();
+    void step(int, Symbol);
     void restart();
     bool transduce(std::string &text);
 };
