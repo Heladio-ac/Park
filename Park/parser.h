@@ -3,7 +3,11 @@
 
 #include <list>
 #include <string>
+#include <algorithm>
 
+#include "lexer.h"
+#include "symbol.h"
+#include "token.h"
 #include "tree.hh"
 #include "token.h"
 

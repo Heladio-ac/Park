@@ -94,7 +94,7 @@
      <rect>
       <x>1050</x>
       <y>10</y>
-      <width>151</width>
+      <width>131</width>
       <height>21</height>
      </rect>
     </property>
@@ -104,7 +104,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Syntax Tree</string>
+     <string>Derivations</string>
     </property>
    </widget>
    <widget class="QPlainTextEdit" name="CodeText">

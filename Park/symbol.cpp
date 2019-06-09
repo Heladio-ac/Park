@@ -1,7 +1,5 @@
 #include "symbol.h"
 
-#include <iostream>
-
 #ifndef NON_TERMINAL_SYMBOLS
 #define NON_TERMINAL_SYMBOLS
     #define PROGRAM 0
@@ -471,7 +469,6 @@ std::list<Symbol> Symbol::derive(int production) {
 }
 
 std::string Symbol::getGrammeme() {
-    std::cout << std::to_string(grammeme) << std::endl;
     if (terminal) {
         switch (grammeme) {
             case 0:
@@ -611,7 +608,6 @@ std::string Symbol::getGrammeme() {
             case ERRORAND:
                 return "Malformed AND operator, expected a second &";
             case ERRORUNKNOWN: default:
-                std::cout << "Unknown error " + std::to_string(grammeme) << std::endl;
                 return "Unknown Error";
         }
     } else {

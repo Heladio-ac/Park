@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 void addSubTree(tree<std::string>, tree<std::string>::sibling_iterator, QStandardItem*);
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -38,9 +37,9 @@ void MainWindow::on_AnalyzeButton_clicked()
     ui->ErrorText->clear();
     ui->treeView->setModel(new QStandardItemModel());
     code = code + " ";
-    if (parser->transduce(code)) {
-        showSyntaxTree();
-    } else {
+    bool valid = parser->transduce(code);
+    showSyntaxTree();
+    if (!valid) {
         showError();
     }
 }
@@ -52,7 +51,7 @@ void MainWindow::on_CodeText_textChanged()
 
 void MainWindow::showSyntaxTree()
 {
-    QStandardItem* root = new QStandardItem("Syntax Tree");
+    QStandardItem* root = new QStandardItem("Derivation Tree");
     tree<std::string> t = parser->syntaxTree;
     for(tree<std::string>::sibling_iterator iRoots = ++t.begin(); iRoots != t.end(); ++iRoots) {
         addSubTree(t,iRoots, root);

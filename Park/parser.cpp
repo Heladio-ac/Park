@@ -1,12 +1,4 @@
 #include "parser.h"
-#include "lexer.h"
-#include "symbol.h"
-#include "token.h"
-
-#include "tree_util.hh"
-
-#include <iostream>
-#include <algorithm>
 
 #ifndef NON_TERMINAL_SYMBOLS
 #define NON_TERMINAL_SYMBOLS
