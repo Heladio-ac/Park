@@ -1,7 +1,5 @@
 #include "parser.h"
 
-#include <iostream>
-
 #ifndef NON_TERMINAL_SYMBOLS
 #define NON_TERMINAL_SYMBOLS
     #define PROGRAM 0
@@ -182,7 +180,7 @@ bool Parser::transduce(std::string &text) {
             } else if (symbols.back().terminal) {
                 // Syntactical error
                 error = "Syntactical error, non matching terminal\n";
-                error += "Expected \"" + symbols.back().getGrammeme() + "\", but found \"" + token.getGrammeme() + "\"";
+                error += "Expected \"" + top.getGrammeme() + "\", but found \"" + token.getGrammeme() + "\"";
                 return false;
             } else {
                 column = Symbol::hash(token.grammeme, token.lexeme);
